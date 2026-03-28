@@ -38,9 +38,9 @@ Before running any auditor:
 5. Create a todo list with all 16 auditors.
 
 ```bash
-find src/ -name '*.py' | wc -l
-grep -rl 'LightningModule\|pl\.Trainer\|Trainer(' src/ --include='*.py' | head -5
-grep -rl 'simplex\|dirichlet\|sphere\|hyperbolic' src/ --include='*.py' | head -5
+find . -name '*.py' | wc -l
+grep -rl 'LightningModule\|pl\.Trainer\|Trainer(' . --include='*.py' | head -5
+grep -rl 'simplex\|dirichlet\|sphere\|hyperbolic' . --include='*.py' | head -5
 ```
 
 ### Step 1 — Triage (determine which auditors to run)
@@ -50,7 +50,7 @@ Not all auditors are relevant for every project. Skip auditors that don't apply:
 |-----------|------|
 | Single GPU, no distributed code | Distributed Training Auditor |
 | No tokenizer / not NLP | Tokenizer / Vocab Auditor |
-| Data is Euclidean (images, tabular) | Geometric Mismatch Auditor |
+| Data is Euclidean (images, tabular), no manifold constraints | Geometric Mismatch Auditor |
 | No torch.compile usage | Memory/Compute (Tier 4 only) |
 
 Mark skipped auditors with reason in the final report.
@@ -60,7 +60,7 @@ For each applicable auditor, invoke it as a subagent:
 
 **Invocation template:**
 ```
-Run @<AgentName> on this codebase. Focus on src/ directory.
+Run @<AgentName> on this codebase. Focus on the main source directory.
 Report findings as: CRITICAL / WARNING / INFO with file:line references.
 Be thorough but avoid false positives.
 ```
@@ -111,7 +111,7 @@ Produce a single consolidated report:
 
 **Project**: <name>
 **Date**: YYYY-MM-DD
-**Files scanned**: N .py files in src/
+**Files scanned**: N .py files
 **Auditors run**: M/16 (N skipped)
 
 ## Executive Summary

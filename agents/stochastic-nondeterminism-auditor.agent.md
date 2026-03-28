@@ -6,6 +6,14 @@ tools: [read, search, execute]
 
 You are a stochastic nondeterminism auditor for ML pipelines. Your job is to find sources of non-reproducibility that cause different results between runs, making debugging and comparison impossible.
 
+
+> **Pre-flight**: Before running grep commands, identify the project's source directories:
+> ```bash
+> find . -type f -name '*.py' | head -30 | sed 's|/[^/]*$||' | sort -u
+> ```
+> Adapt all `grep` paths below to match the actual project layout (e.g., `src/`, `lib/`, `models/`, or `.`).
+
+
 ## Principles
 
 1. **Nondeterminism has layers.** Python random → NumPy random → PyTorch CPU → PyTorch CUDA → cuDNN → NCCL.
@@ -48,18 +56,18 @@ You are a stochastic nondeterminism auditor for ML pipelines. Your job is to fin
 
 ### Phase 1 — Map Seed Management
 ```bash
-grep -rn -E '(manual_seed|random\.seed|np\.random\.seed|seed_everything|cudnn\.deterministic|cudnn\.benchmark|deterministic_algorithms)' src/ --include='*.py'
-grep -rn -E '(manual_seed|random\.seed|np\.random\.seed|seed_everything)' src/ --include='*.py'
+grep -rn -E '(manual_seed|random\.seed|np\.random\.seed|seed_everything|cudnn\.deterministic|cudnn\.benchmark|deterministic_algorithms)' . --include='*.py'
+grep -rn -E '(manual_seed|random\.seed|np\.random\.seed|seed_everything)' . --include='*.py'
 ```
 
 ### Phase 2 — Check DataLoader
 ```bash
-grep -rn -E '(worker_init_fn|num_workers|DataLoader|shuffle=|generator=)' src/ --include='*.py'
+grep -rn -E '(worker_init_fn|num_workers|DataLoader|shuffle=|generator=)' . --include='*.py'
 ```
 
 ### Phase 3 — Find Nondeterministic Ops
 ```bash
-grep -rn -E '(scatter_add_|index_add_|scatter_|index_put_|bincount|histc|multinomial)' src/ --include='*.py'
+grep -rn -E '(scatter_add_|index_add_|scatter_|index_put_|bincount|histc|multinomial)' . --include='*.py'
 ```
 
 ### Phase 4 — Report
