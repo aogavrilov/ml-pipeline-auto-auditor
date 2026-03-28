@@ -1,0 +1,38 @@
+{
+  "name": "ml-pipeline-auto-auditor",
+  "version": "1.0.0",
+  "description": "17 AI agents for comprehensive ML pipeline bug detection. Works with GitHub Copilot and Claude Code.",
+  "bin": {
+    "ml-pipeline-auto-auditor": "./cli.js"
+  },
+  "keywords": [
+    "machine-learning",
+    "mlops",
+    "pytorch",
+    "deep-learning",
+    "code-audit",
+    "github-copilot",
+    "copilot-agents",
+    "ai-agents",
+    "debugging",
+    "numerical-stability",
+    "gradient-flow",
+    "training",
+    "linting",
+    "code-quality",
+    "ml-pipeline"
+  ],
+  "author": "AOGavrilov",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aogavrilov/ml-pipeline-auto-auditor.git"
+  },
+  "homepage": "https://github.com/aogavrilov/ml-pipeline-auto-auditor",
+  "files": [
+    "cli.js",
+    "agents/*.agent.md",
+    "LICENSE",
+    "README.md"
+  ]
+}
