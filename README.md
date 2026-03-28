@@ -39,7 +39,7 @@ These are not generic linters — they understand ML-specific semantics like aut
 ### Quick Install (all auditors)
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/ml-pipeline-auditors.git
+git clone https://github.com/aogavrilov/ml-pipeline-auto-auditor.git
 cd ml-pipeline-auditors
 ./install.sh /path/to/your-ml-project
 ```
